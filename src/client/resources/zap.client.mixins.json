@@ -1,11 +1,12 @@
 {
-	"required": true,
-	"package": "zap.mixin.client",
-	"compatibilityLevel": "JAVA_21",
-	"client": [
-		"ExampleClientMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	}
+  "required": true,
+  "minVersion": "0.8",
+  "package": "zap.mixin.client",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "InventorySortButton"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }
