@@ -1,4 +1,4 @@
-# Quark Inventory Sorter (Fabric)
+# Inventory Sorter (Fabric)
 
 (WIP) A Fabric mod that replicates all inventory sorting and management features from Quark's inventory sorting module.
 
