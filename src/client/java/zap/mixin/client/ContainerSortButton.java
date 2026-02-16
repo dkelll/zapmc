@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import zap.network.SortContainerPacket;
 import zap.network.DepositContainerPacket;
 import zap.network.RestockContainerPacket;
+import zap.network.ExtractContainerPacket;
 
 @Mixin(GenericContainerScreen.class)
 public abstract class ContainerSortButton extends HandledScreen<GenericContainerScreenHandler> {
@@ -62,9 +63,21 @@ public abstract class ContainerSortButton extends HandledScreen<GenericContainer
             .tooltip(net.minecraft.client.gui.tooltip.Tooltip.of(Text.literal("Restock matching items")))
             .build();
 
+            // Extract button - left of restock
+            int extractX = restockX - 14;
+            int extractY = sortY;
+
+            ButtonWidget extractButton = ButtonWidget.builder(Text.literal("E"), button -> {
+                onExtractClicked();
+            })
+            .dimensions(extractX, extractY, 12, 12)
+            .tooltip(net.minecraft.client.gui.tooltip.Tooltip.of(Text.literal("Extract matching items")))
+            .build();
+
             this.addDrawableChild(sortButton);
             this.addDrawableChild(depositButton);
             this.addDrawableChild(restockButton);
+            this.addDrawableChild(extractButton);
         }
     }
 
@@ -81,5 +94,10 @@ public abstract class ContainerSortButton extends HandledScreen<GenericContainer
     private void onRestockClicked() {
         int syncId = this.handler.syncId;
         ClientPlayNetworking.send(new RestockContainerPacket(syncId));
+    }
+
+    private void onExtractClicked() {
+        int syncId = this.handler.syncId;
+        ClientPlayNetworking.send(new ExtractContainerPacket(syncId));
     }
 }

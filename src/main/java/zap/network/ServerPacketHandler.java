@@ -7,6 +7,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.network.ServerPlayerEntity;
 import zap.sorting.ContainerDepositor;
+import zap.sorting.ContainerExtractor;
 import zap.sorting.ContainerRestocker;
 import zap.sorting.ContainerSorter;
 import zap.sorting.InventorySorter;
@@ -97,6 +98,31 @@ public class ServerPacketHandler {
                             if (!(containerInventory instanceof PlayerInventory)) {
                                 PlayerInventory playerInv = player.getInventory();
                                 ContainerRestocker.restockContainer(playerInv, containerInventory);
+                                handler.sendContentUpdates();
+                            }
+                        }
+                    }
+                });
+            }
+        );
+
+        // Container extract
+        ServerPlayNetworking.registerGlobalReceiver(
+            ExtractContainerPacket.ID,
+            (payload, context) -> {
+                ServerPlayerEntity player = context.player();
+                int syncId = payload.syncId();
+
+                context.server().execute(() -> {
+                    ScreenHandler handler = player.currentScreenHandler;
+
+                    if (handler.syncId == syncId) {
+                        Slot firstSlot = handler.getSlot(0);
+                        if (firstSlot != null) {
+                            Inventory containerInventory = firstSlot.inventory;
+                            if (!(containerInventory instanceof PlayerInventory)) {
+                                PlayerInventory playerInv = player.getInventory();
+                                ContainerExtractor.extractFromContainer(playerInv, containerInventory);
                                 handler.sendContentUpdates();
                             }
                         }
