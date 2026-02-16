@@ -7,7 +7,10 @@
   "authors": [
     "Obviously DK"
   ],
-  "contact": {},
+  "contact": {
+      "homepage": "https://modrinth.com/mod/zap-inventory-sorter",
+      "sources": "https://github.com/dkelll/zapmc"
+  },
   "license": "MIT",
   "icon": "assets/zap/image.jpg",
   "environment": "*",
