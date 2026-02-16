@@ -25,13 +25,15 @@ public abstract class InventorySortButton extends HandledScreen<PlayerScreenHand
 
     @Inject(method = "init", at = @At("TAIL"))
     private void addSortButton(CallbackInfo ci) {
-        int x = this.x + this.backgroundWidth - 30;
-        int y = this.y + 10;
+        // Position outside (to the right of) the inventory window
+        // Top row of inventory is at y + 84
+        int x = this.x + this.backgroundWidth + 2;
+        int y = this.y + 84;
 
         ButtonWidget sortButton = ButtonWidget.builder(Text.literal("S"), button -> {
             onSortClicked();
         })
-        .dimensions(x, y, 20, 20)
+        .dimensions(x, y, 12, 12)
         .tooltip(net.minecraft.client.gui.tooltip.Tooltip.of(Text.literal("Sort inventory")))
         .build();
 
