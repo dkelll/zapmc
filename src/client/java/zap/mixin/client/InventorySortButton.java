@@ -32,6 +32,7 @@ public abstract class InventorySortButton extends HandledScreen<PlayerScreenHand
             onSortClicked();
         })
         .dimensions(x, y, 20, 20)
+        .tooltip(net.minecraft.client.gui.tooltip.Tooltip.of(Text.literal("Sort inventory")))
         .build();
 
         this.addDrawableChild(sortButton);
@@ -42,3 +43,4 @@ public abstract class InventorySortButton extends HandledScreen<PlayerScreenHand
         ClientPlayNetworking.send(new SortInventoryPacket());
     }
 }
+
