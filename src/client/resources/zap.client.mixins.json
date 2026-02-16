@@ -4,7 +4,9 @@
   "package": "zap.mixin.client",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "InventorySortButton"
+    "InventorySortButton",
+    "ContainerSortButton",
+    "ShulkerBoxSortButton"
   ],
   "injectors": {
     "defaultRequire": 1
