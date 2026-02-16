@@ -9,7 +9,7 @@
   ],
   "contact": {},
   "license": "MIT",
-  "icon": "assets/zap/icon.png",
+  "icon": "assets/zap/image.jpg",
   "environment": "*",
   "entrypoints": {
     "main": [
