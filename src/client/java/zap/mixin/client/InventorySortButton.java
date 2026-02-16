@@ -3,12 +3,19 @@ package zap.mixin.client;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.text.Text;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import zap.sorting.ItemCategorizer;
+import zap.sorting.CategoryRule;
+import zap.sorting.InventorySorter;
 
 @Mixin(InventoryScreen.class)
 public abstract class InventorySortButton extends HandledScreen<PlayerScreenHandler> {
@@ -22,18 +29,20 @@ public abstract class InventorySortButton extends HandledScreen<PlayerScreenHand
         int x = this.x + this.backgroundWidth - 30;
         int y = this.y + 10;
 
-            ButtonWidget sortButton = ButtonWidget.builder(Text.literal("S"), button -> {
-                onSortClicked();
-            })
-            .dimensions(x, y, 20, 20)
-            .build();
+        ButtonWidget sortButton = ButtonWidget.builder(Text.literal("S"), button -> {
+            onSortClicked();
+        })
+        .dimensions(x, y, 20, 20)
+        .build();
 
         this.addDrawableChild(sortButton);
     }
 
     private void onSortClicked() {
-        System.out.println("Sort button clicked!");
-        // Sorting logic will go here
+
+        System.out.println("Sorting inventory...");
+        PlayerInventory inv = this.client.player.getInventory();
+        InventorySorter.sortInventory(inv);
+        System.out.println("Inventory sorted!");
     }
 }
-
