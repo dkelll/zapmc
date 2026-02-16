@@ -1,5 +1,6 @@
 package zap.mixin.client;
 
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -13,9 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import zap.sorting.ItemCategorizer;
-import zap.sorting.CategoryRule;
-import zap.sorting.InventorySorter;
+import zap.network.SortInventoryPacket;
 
 @Mixin(InventoryScreen.class)
 public abstract class InventorySortButton extends HandledScreen<PlayerScreenHandler> {
@@ -39,10 +38,7 @@ public abstract class InventorySortButton extends HandledScreen<PlayerScreenHand
     }
 
     private void onSortClicked() {
-
-        System.out.println("Sorting inventory...");
-        PlayerInventory inv = this.client.player.getInventory();
-        InventorySorter.sortInventory(inv);
-        System.out.println("Inventory sorted!");
+        // Send packet to server to request sorting
+        ClientPlayNetworking.send(new SortInventoryPacket());
     }
 }

@@ -1,24 +1,22 @@
 package zap;
 
 import net.fabricmc.api.ModInitializer;
+import zap.network.ServerPacketHandler;
+import zap.network.SortInventoryPacket;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+/**
+ * Main mod initializer for server-side logic.
+ */
 public class Zap implements ModInitializer {
-	public static final String MOD_ID = "zap";
 
-	// This logger is used to write text to the console and the log file.
-	// It is considered best practice to use your mod id as the logger's name.
-	// That way, it's clear which mod wrote info, warnings, and errors.
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    @Override
+    public void onInitialize() {
+        // Register packets
+        SortInventoryPacket.register();
 
-	@Override
-	public void onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
+        // Register packet handlers
+        ServerPacketHandler.register();
 
-		LOGGER.info("Hello Fabric world!");
-	}
+        System.out.println("Zap mod initialized on server!");
+    }
 }

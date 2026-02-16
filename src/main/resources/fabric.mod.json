@@ -11,7 +11,14 @@
   "license": "MIT",
   "icon": "assets/zap/icon.png",
   "environment": "*",
-  "entrypoints": {},
+  "entrypoints": {
+    "main": [
+      "zap.Zap"
+    ],
+    "client": [
+      "zap.ZapClient"
+    ]
+  },
   "mixins": [
     {
       "config": "zap.client.mixins.json",

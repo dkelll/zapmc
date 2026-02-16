@@ -2,9 +2,13 @@ package zap;
 
 import net.fabricmc.api.ClientModInitializer;
 
+/**
+ * Client-side mod initializer.
+ */
 public class ZapClient implements ClientModInitializer {
-	@Override
-	public void onInitializeClient() {
-		// This entrypoint is suitable for setting up client-specific logic, such as rendering.
-	}
+
+    @Override
+    public void onInitializeClient() {
+        System.out.println("Zap mod initialized on client!");
+    }
 }
