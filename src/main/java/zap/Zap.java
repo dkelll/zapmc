@@ -6,6 +6,7 @@ import zap.network.SortInventoryPacket;
 import zap.network.SortContainerPacket;
 import zap.network.DepositContainerPacket;
 import zap.network.RestockContainerPacket;
+import zap.network.ExtractContainerPacket;
 
 /**
  * Main mod initializer for server-side logic.
@@ -19,6 +20,7 @@ public class Zap implements ModInitializer {
         SortContainerPacket.register();
         DepositContainerPacket.register();
         RestockContainerPacket.register();
+        ExtractContainerPacket.register();
 
         // Register packet handlers
         ServerPacketHandler.register();
