@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import zap.network.SortContainerPacket;
 import zap.network.DepositContainerPacket;
+import zap.network.RestockContainerPacket;
 
 @Mixin(ShulkerBoxScreen.class)
 public abstract class ShulkerBoxSortButton extends HandledScreen<ShulkerBoxScreenHandler> {
@@ -29,29 +30,41 @@ public abstract class ShulkerBoxSortButton extends HandledScreen<ShulkerBoxScree
             child instanceof ButtonWidget btn && btn.getMessage().getString().equals("S"))) {
 
             // Sort button - rightmost
-            int sortX = this.x + this.backgroundWidth - 20;
+            int sortX = this.x + this.backgroundWidth - 16;
             int sortY = this.y + 5;
 
             ButtonWidget sortButton = ButtonWidget.builder(Text.literal("S"), button -> {
                 onSortClicked();
             })
-            .dimensions(sortX, sortY, 16, 16)
+            .dimensions(sortX, sortY, 12, 12)
             .tooltip(net.minecraft.client.gui.tooltip.Tooltip.of(Text.literal("Sort container")))
             .build();
 
             // Deposit button - left of sort
-            int depositX = sortX - 18;
+            int depositX = sortX - 14;
             int depositY = sortY;
 
             ButtonWidget depositButton = ButtonWidget.builder(Text.literal("D"), button -> {
                 onDepositClicked();
             })
-            .dimensions(depositX, depositY, 16, 16)
+            .dimensions(depositX, depositY, 12, 12)
             .tooltip(net.minecraft.client.gui.tooltip.Tooltip.of(Text.literal("Deposit all items")))
+            .build();
+
+            // Restock button - left of deposit
+            int restockX = depositX - 14;
+            int restockY = sortY;
+
+            ButtonWidget restockButton = ButtonWidget.builder(Text.literal("R"), button -> {
+                onRestockClicked();
+            })
+            .dimensions(restockX, restockY, 12, 12)
+            .tooltip(net.minecraft.client.gui.tooltip.Tooltip.of(Text.literal("Restock matching items")))
             .build();
 
             this.addDrawableChild(sortButton);
             this.addDrawableChild(depositButton);
+            this.addDrawableChild(restockButton);
         }
     }
 
@@ -63,5 +76,10 @@ public abstract class ShulkerBoxSortButton extends HandledScreen<ShulkerBoxScree
     private void onDepositClicked() {
         int syncId = this.handler.syncId;
         ClientPlayNetworking.send(new DepositContainerPacket(syncId));
+    }
+
+    private void onRestockClicked() {
+        int syncId = this.handler.syncId;
+        ClientPlayNetworking.send(new RestockContainerPacket(syncId));
     }
 }
